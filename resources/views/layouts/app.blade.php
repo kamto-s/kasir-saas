@@ -1,36 +1,45 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en" data-bs-theme="light" data-menu-color="brand" data-topbar-color="light">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<head>
+    <meta charset="utf-8" />
+    <title>@yield('title') | Moro App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Myra Studio" name="author" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <link href="{{ asset('assets/libs/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <link href="{{ asset('assets/css/style.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
+    @stack('styles')
+    <script src="{{ asset('assets/js/config.js') }}"></script>
+</head>
+
+<body>
+    <div class="layout-wrapper">
+        @include('layouts.partials.sidebar')
+
+        <div class="page-content">
+
+            @include('layouts.partials.topbar')
+
+            <div class="px-3">
+                @yield('content')
+            </div>
+
+            @include('layouts.partials.footer')
+
         </div>
-    </body>
+
+    </div>
+
+    @include('layouts.partials.scripts')
+    @stack('scripts')
+</body>
+
 </html>
