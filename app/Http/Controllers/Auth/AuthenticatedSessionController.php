@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\RoleCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
@@ -28,7 +29,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = $request->user();
+
+        return match ($user->role->code) {
+            RoleCode::SUPER_ADMIN->value    => redirect()->route('super-admin.dashboard'),
+            RoleCode::OWNER->value          => redirect()->route('owner.dashboard'),
+            RoleCode::CASHIER->value        => redirect()->route('cashier.dashboard'),
+            default                         => abort(403),
+        };
     }
 
     /**
