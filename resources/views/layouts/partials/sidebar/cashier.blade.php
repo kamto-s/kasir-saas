@@ -26,7 +26,7 @@
                 </a>
             </li>
 
-            <li class="menu-title">Master</li>
+            <li class="menu-title">Master Data</li>
 
             <li class="menu-item">
                 <a class='menu-link waves-effect waves-light' href='#'>

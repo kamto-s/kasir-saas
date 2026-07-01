@@ -22,14 +22,25 @@
 
 <body>
     <div class="layout-wrapper">
-        @include('layouts.partials.sidebar')
+
+        @if (auth()->user()->role->code === 'SUPER_ADMIN')
+            @include('layouts.partials.sidebar.super-admin')
+        @elseif (auth()->user()->role->code === 'OWNER')
+            @include('layouts.partials.sidebar.owner')
+        @elseif (auth()->user()->role->code === 'CASHIER')
+            @include('layouts.partials.sidebar.cashier')
+        @endif
 
         <div class="page-content">
 
             @include('layouts.partials.topbar')
 
             <div class="px-3">
-                @yield('content')
+                <div class="container-fluid">
+                    @include('layouts.partials.breadcumb')
+
+                    @yield('content')
+                </div>
             </div>
 
             @include('layouts.partials.footer')
