@@ -12,7 +12,7 @@
 
                 <!-- Brand Logo Dark -->
                 <a class='logo-dark' href='index.html'>
-                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo" class="logo-lg"
+                    <img src="{{ asset('assets/images/logo/logo-text-light_2.png') }}" alt="dark logo" class="logo-lg"
                         height="22">
                     <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo" class="logo-sm" height="22">
                 </a>

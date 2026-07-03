@@ -1,14 +1,16 @@
 <div class="main-menu">
     <!-- Brand Logo -->
     <div class="logo-box">
-        <a class='logo-light' href='index.html'>
-            <img src="{{ asset('assets/images/logo-light.png') }}" alt="logo" class="logo-lg" height="28">
-            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo" class="logo-sm" height="28">
+        <a class='logo-light' href='#'>
+            <img src="{{ asset('assets/images/logo/logo-text-light_4.png') }}" alt="logo" class="logo-lg"
+                height="28">
+            <img src="{{ asset('assets/images/logo/logo-sm_2.png') }}" alt="small logo" class="logo-sm" height="28">
         </a>
 
         <!-- Brand Logo Dark -->
-        <a class='logo-dark' href='index.html'>
-            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo" class="logo-lg" height="28">
+        <a class='logo-dark' href='#'>
+            <img src="{{ asset('assets/images/logo/logo-text-light_2.png') }}" alt="dark logo" class="logo-lg"
+                height="28">
             <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo" class="logo-sm" height="28">
         </a>
     </div>

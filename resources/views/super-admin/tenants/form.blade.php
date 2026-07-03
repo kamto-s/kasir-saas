@@ -65,12 +65,12 @@
 </div>
 <hr class="mb-4" />
 
-<div class="text-end">
-    <a href="{{ route('super-admin.tenants.index') }}" class="btn btn-light me-2">
+<div class="gap-2 d-flex justify-content-end">
+    <a href="{{ route('super-admin.tenants.index') }}" class="btn btn-light" style="min-width: 160px;">
         Cancel
     </a>
 
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary" style="min-width: 160px;">
         Save
     </button>
 </div>
