@@ -18,12 +18,11 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{ route('super-admin.tenants.update', 1) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('super-admin.tenants.update', $tenant) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 @include('super-admin.tenants.form')
-
             </form>
         </div>
     </div>

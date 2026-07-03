@@ -19,6 +19,7 @@
         <div class="card-body">
 
             <form action="{{ route('super-admin.tenants.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 @include('super-admin.tenants.form')
             </form>
 

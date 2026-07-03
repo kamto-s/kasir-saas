@@ -6,63 +6,77 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Superadmin\Tenant\StoreTenantRequest;
 use App\Http\Requests\Superadmin\Tenant\UpdateTenantRequest;
 use App\Models\Tenant;
-use Illuminate\Http\Request;
+use App\Services\Superadmin\TenantService;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TenantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private TenantService $tenantService;
+
+    public function __construct()
+    {
+        $this->tenantService = new TenantService();
+    }
+
     public function index()
     {
+        $title = 'Delete Tenant';
+        $text = 'Are you sure you want to delete this tenant?';
+
+        confirmDelete($title, $text);
+
         return view('super-admin.tenants.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function data()
+    {
+        return $this->tenantService->datatable();
+    }
+
     public function create()
     {
         return view('super-admin.tenants.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTenantRequest $request)
     {
-        //
+        $this->tenantService->create(
+            $request->validated()
+        );
+
+        Alert::success('Success', 'Tenant created successfully.');
+
+        return redirect()->route('super-admin.tenants.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Tenant $tenant)
     {
-        return view('super-admin.tenants.edit');
+        return view('super-admin.tenants.edit', compact('tenant'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTenantRequest $request, Tenant $tenant)
     {
-        //
+        $this->tenantService->update(
+            $tenant,
+            $request->validated()
+        );
+
+        Alert::success('Success', 'Tenant updated successfully.');
+
+        return redirect()->route('super-admin.tenants.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Tenant $tenant)
     {
-        //
+        $this->tenantService->delete($tenant);
+
+        Alert::success('Success', 'Tenant deleted successfully.');
+
+        return redirect()->route('super-admin.tenants.index');
     }
 }

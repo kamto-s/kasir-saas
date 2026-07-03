@@ -27,41 +27,81 @@
 
                     <hr class="mb-4">
 
-                    <table id="basic-datatable" class="table dt-responsive nowrap w-100 table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                    {{-- skeleton table --}}
+                    <div id="tableSkeleton" class="table-responsive placeholder-glow">
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div class="gap-2 d-flex align-items-center">
+                                <span class="rounded placeholder" style="width: 190px; height: 18px;"></span>
+                            </div>
+                            <div class="gap-2 d-flex align-items-center">
+                                <span class="rounded placeholder" style="width: 190px; height: 18px;"></span>
+                            </div>
 
+                        </div>
+                        <table class="table align-middle table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="60"><span class="placeholder col-8"></span></th>
+                                    <th><span class="placeholder col-10"></span></th>
+                                    <th><span class="placeholder col-9"></span></th>
+                                    <th><span class="placeholder col-11"></span></th>
+                                    <th><span class="placeholder col-8"></span></th>
+                                    <th width="100"><span class="placeholder col-8"></span></th>
+                                    <th width="120"><span class="placeholder col-9"></span></th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>
-                                    <div class="gap-2 d-flex">
-                                        <a href="{{ route('super-admin.tenants.edit', 1) }}"
-                                            class="btn btn-sm btn-outline-warning">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-outline-danger">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            <tbody>
+                                @for ($i = 0; $i < 5; $i++)
+                                    <tr>
+                                        <td><span class="placeholder col-8"></span></td>
+                                        <td><span class="placeholder col-10"></span></td>
+                                        <td><span class="placeholder col-9"></span></td>
+                                        <td><span class="placeholder col-11"></span></td>
+                                        <td><span class="placeholder col-8"></span></td>
 
-                        </tbody>
-                    </table>
+                                        <td>
+                                            <span class="placeholder rounded-pill col-8"></span>
+                                        </td>
+
+                                        <td>
+                                            <div class="gap-2 d-flex">
+                                                <span class="rounded placeholder" style="width:32px;height:32px;"></span>
+                                                <span class="rounded placeholder" style="width:32px;height:32px;"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+
+                            <span class="rounded placeholder" style="width:190px;height:18px;"></span>
+
+                            <div class="gap-1 d-flex">
+                                @for ($i = 0; $i < 4; $i++)
+                                    <span class="rounded placeholder" style="width:34px;height:34px;"></span>
+                                @endfor
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="tableWrapper" class="table-hidden">
+                        <table id="tenantTable" class="table table-bordered table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th width="120">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
 
                 </div>
             </div>
@@ -70,29 +110,77 @@
 @endsection
 
 @push('styles')
-    <link href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/datatables.net-select-bs5/css/select.bootstrap5.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <style>
+        #tableWrapper {
+            opacity: 0;
+            transition: opacity .2s;
+        }
+        #tableWrapper.show {
+            opacity: 1;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/datatables.js') }}"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        $(function() {
+            let table = $('#tenantTable').DataTable({
+                processing: false,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    url: "{{ route('super-admin.tenants.data') }}"
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        width: '60px',
+                        className: 'text-center',
+                        searchable: false,
+                        orderable: false
+                    },
+                    {
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
+                    },
+                    {
+                        data: 'is_active',
+                        name: 'is_active',
+                        width: '120px'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        width: '120px',
+                        className: 'text-center',
+                        searchable: false,
+                        orderable: false
+                    }
+                ],
+                initComplete: function() {
+
+                    $('#tableSkeleton').hide();
+
+                    $('#tableWrapper').show().addClass('show');
+
+                }
+            });
+        });
+    </script>
 @endpush

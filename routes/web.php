@@ -23,7 +23,9 @@ Route::middleware('auth')->group(function () {
     // SUPERADMIN
     Route::prefix('super-admin')->name('super-admin.')->middleware('role:SUPER_ADMIN')->group(function () {
         Route::get('/dashboard', [SuperAdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('/tenants', TenantController::class);
+        // Tenants
+        Route::resource('tenants', TenantController::class)->except('show');
+        Route::get('tenants/data', [TenantController::class, 'data'])->name('tenants.data');
 
         // Route::resource('branches', BranchController::class);
         // Route::resource('users', UserController::class);

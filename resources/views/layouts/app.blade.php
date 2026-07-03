@@ -21,6 +21,8 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
+
     <div class="layout-wrapper">
 
         @if (auth()->user()->role->code === 'SUPER_ADMIN')

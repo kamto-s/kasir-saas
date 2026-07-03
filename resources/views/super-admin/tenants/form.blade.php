@@ -1,7 +1,4 @@
-@csrf
-
 <div class="row">
-
     <div class="mb-3 col-md-6">
         <label class="form-label">Code <span class="text-danger">*</span></label>
         <input type="text" name="code" class="form-control @error('code') is-invalid @enderror"
@@ -66,15 +63,14 @@
     </div>
 
 </div>
+<hr class="mb-4" />
 
 <div class="text-end">
-
-    <a href="{{ route('super-admin.tenants.index') }}" class="btn btn-secondary">
+    <a href="{{ route('super-admin.tenants.index') }}" class="btn btn-light me-2">
         Cancel
     </a>
 
     <button type="submit" class="btn btn-primary">
         Save
     </button>
-
 </div>
