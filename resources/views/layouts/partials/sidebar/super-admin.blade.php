@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <div class="logo-box">
         <a class='logo-light' href='#'>
-            <img src="{{ asset('assets/images/logo/logo-text-light_4.png') }}" alt="logo" class="logo-lg"
+            <img src="{{ asset('assets/images/logo/logo-text-light_7.png') }}" alt="logo" class="logo-lg"
                 height="28">
             <img src="{{ asset('assets/images/logo/logo-sm_2.png') }}" alt="small logo" class="logo-sm" height="28">
         </a>
@@ -35,8 +35,8 @@
                     <span class="menu-text"> Tenant </span>
                 </a>
             </li>
-            <li class="menu-item">
-                <a class='menu-link waves-effect waves-light' href='#'>
+            <li class="menu-item {{ request()->routeIs('super-admin.branches.*') ? 'active' : '' }}">
+                <a class='menu-link waves-effect waves-light' href='{{ route('super-admin.branches.index') }}'>
                     <span class="menu-icon"><i class="bx bx-store"></i></span>
                     <span class="menu-text"> Branch </span>
                 </a>

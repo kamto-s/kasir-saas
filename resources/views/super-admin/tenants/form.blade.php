@@ -2,7 +2,7 @@
     <div class="mb-3 col-md-6">
         <label class="form-label">Code <span class="text-danger">*</span></label>
         <input type="text" name="code" class="form-control @error('code') is-invalid @enderror"
-            value="{{ old('code', $tenant->code ?? '') }}" placeholder="Tenant Code">
+            value="{{ old('code', $tenant->code ?? '') }}" placeholder="Code will be generated automatically." readonly>
 
         @error('code')
             <div class="invalid-feedback">{{ $message }}</div>

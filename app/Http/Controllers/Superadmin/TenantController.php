@@ -40,9 +40,7 @@ class TenantController extends Controller
 
     public function store(StoreTenantRequest $request)
     {
-        $this->tenantService->create(
-            $request->validated()
-        );
+        $this->tenantService->create($request->validated());
 
         Alert::success('Success', 'Tenant created successfully.');
 
@@ -73,9 +71,13 @@ class TenantController extends Controller
 
     public function destroy(Tenant $tenant)
     {
-        $this->tenantService->delete($tenant);
+        try {
+            $this->tenantService->delete($tenant);
 
-        Alert::success('Success', 'Tenant deleted successfully.');
+            Alert::success('Success', 'Tenant deleted successfully.');
+        } catch (\Throwable $e) {
+            Alert::error('Failed', $e->getMessage());
+        }
 
         return redirect()->route('super-admin.tenants.index');
     }

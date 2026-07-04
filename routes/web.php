@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
+use App\Http\Controllers\superadmin\BranchController;
 use App\Http\Controllers\Superadmin\TenantController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,9 @@ Route::middleware('auth')->group(function () {
         // Tenants
         Route::resource('tenants', TenantController::class)->except('show');
         Route::get('tenants/data', [TenantController::class, 'data'])->name('tenants.data');
-
-        // Route::resource('branches', BranchController::class);
-        // Route::resource('users', UserController::class);
+        // branches
+        Route::resource('branches', BranchController::class)->except('show');
+        Route::get('branches/data', [BranchController::class, 'data'])->name('branches.data');
     });
 
     // OWNER

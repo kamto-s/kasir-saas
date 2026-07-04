@@ -24,7 +24,6 @@ class StoreTenantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:20',  Rule::unique('tenants', 'code')],
             'name' => ['required', 'string', 'max:150'],
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],

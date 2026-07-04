@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | Moro App</title>
+    <title>@yield('title') | MoroApp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Myra Studio" name="author" />
@@ -18,6 +18,8 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     @stack('styles')
     <script src="{{ asset('assets/js/config.js') }}"></script>
+
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>

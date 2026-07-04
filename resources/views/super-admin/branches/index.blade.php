@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tenant')
+@section('title', 'Branch')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
@@ -19,7 +19,7 @@
                     <div class="mb-3 d-flex justify-content-between align-items-center">
                         <h4 class="header-title">@yield('title') List</h4>
 
-                        <a href="{{ route('super-admin.tenants.create') }}" class="btn btn-primary">
+                        <a href="{{ route('super-admin.branches.create') }}" class="btn btn-primary">
                             <i class="bx bx-plus"></i>
                             Add @yield('title')
                         </a>
@@ -44,6 +44,8 @@
                                     <th width="60"><span class="placeholder col-8"></span></th>
                                     <th><span class="placeholder col-10"></span></th>
                                     <th><span class="placeholder col-9"></span></th>
+                                    <th><span class="placeholder col-9"></span></th>
+                                    <th><span class="placeholder col-9"></span></th>
                                     <th><span class="placeholder col-11"></span></th>
                                     <th><span class="placeholder col-8"></span></th>
                                     <th width="100"><span class="placeholder col-8"></span></th>
@@ -54,6 +56,8 @@
                             <tbody>
                                 @for ($i = 0; $i < 5; $i++)
                                     <tr>
+                                        <td><span class="placeholder col-8"></span></td>
+                                        <td><span class="placeholder col-8"></span></td>
                                         <td><span class="placeholder col-8"></span></td>
                                         <td><span class="placeholder col-10"></span></td>
                                         <td><span class="placeholder col-9"></span></td>
@@ -88,10 +92,11 @@
                     </div>
 
                     <div id="tableWrapper" class="table-hidden">
-                        <table id="tenantTable" class="table table-hover w-100">
+                        <table id="branchTable" class="table table-hover w-100">
                             <thead>
                                 <tr class="bg-light">
                                     <th>No</th>
+                                    <th>Tenant</th>
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -129,12 +134,12 @@
 
     <script>
         $(function() {
-            let table = $('#tenantTable').DataTable({
+            let table = $('#branchTable').DataTable({
                 processing: false,
                 serverSide: true,
                 autoWidth: false,
                 ajax: {
-                    url: "{{ route('super-admin.tenants.data') }}"
+                    url: "{{ route('super-admin.branches.data') }}"
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -143,6 +148,10 @@
                         className: 'text-center',
                         searchable: false,
                         orderable: false
+                    },
+                    {
+                        data: 'tenant',
+                        name: 'tenant'
                     },
                     {
                         data: 'code',
