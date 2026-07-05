@@ -5,6 +5,7 @@ namespace App\Services\Superadmin;
 use App\Models\Branch;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class BranchService
@@ -22,7 +23,7 @@ class BranchService
                 if ($row->is_main) {
                     if ($row->is_main) {
                         $html .= '
-                                <span class="badge bg-primary-subtle text-primary border ms-2">
+                                <span class="border badge bg-primary-subtle text-primary ms-2">
                                     Main
                                 </span>';
                     }
@@ -46,12 +47,7 @@ class BranchService
     {
         return DB::transaction(function () use ($data) {
 
-            if ($data['is_main']) {
-                Branch::where('tenant_id', $data['tenant_id'])
-                    ->update([
-                        'is_main' => false,
-                    ]);
-            }
+            $data['is_main'] = ! Branch::where('tenant_id', $data['tenant_id'])->exists();
 
             $data['code'] = $this->generateCode($data['tenant_id']);
 
@@ -64,7 +60,7 @@ class BranchService
         return DB::transaction(function () use ($branch, $data) {
 
             if ($data['is_main']) {
-                Branch::where('tenant_id', $data['tenant_id'])
+                Branch::where('tenant_id', $branch->tenant_id)
                     ->whereKeyNot($branch->id)
                     ->update([
                         'is_main' => false,
@@ -90,7 +86,8 @@ class BranchService
     {
         $tenant = Tenant::findOrFail($tenantId);
 
-        $last = Branch::where('tenant_id', $tenantId)
+        $last = Branch::withTrashed()
+            ->where('tenant_id', $tenantId)
             ->orderByDesc('code')
             ->first();
 

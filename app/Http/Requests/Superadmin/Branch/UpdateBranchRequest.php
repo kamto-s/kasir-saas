@@ -56,7 +56,7 @@ class UpdateBranchRequest extends FormRequest
             ],
 
             'is_main' => [
-                'required',
+                'nullable',
                 'boolean',
             ],
 

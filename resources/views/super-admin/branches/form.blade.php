@@ -58,18 +58,21 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-md-6">
-        <label class="form-label">Main Branch</label>
-        <select name="is_main" class="form-select">
-            <option value="1" @selected(old('is_main', $branch->is_main ?? 0))>
-                Yes
-            </option>
+    @if (isset($branch))
+        <div class="mb-3 col-md-6">
+            <label class="form-label">Main Branch</label>
 
-            <option value="0" @selected(!old('is_main', $branch->is_main ?? 0))>
-                No
-            </option>
-        </select>
-    </div>
+            <select name="is_main" class="form-select">
+                <option value="0" @selected(old('is_main', $branch->is_main) == 0)>
+                    No
+                </option>
+
+                <option value="1" @selected(old('is_main', $branch->is_main) == 1)>
+                    Yes
+                </option>
+            </select>
+        </div>
+    @endif
 
     <div class="mb-3 col-md-6">
         <label class="form-label">Status</label>
@@ -95,7 +98,7 @@
         @enderror
     </div>
 
-    <hr class="mb-3 mt-2" />
+    <hr class="mt-2 mb-3" />
 
     <div class="gap-2 d-flex justify-content-end">
         <a href="{{ route('super-admin.branches.index') }}" class="btn btn-light" style="min-width: 160px;">

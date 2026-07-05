@@ -43,11 +43,19 @@ class BranchController extends Controller
 
     public function store(StoreBranchRequest $request)
     {
-        $this->branchService->create($request->validated());
+        try {
+            $this->branchService->create($request->validated());
 
-        Alert::success('Success', 'Branch created successfully.');
+            Alert::success('Success', 'Branch created successfully.');
 
-        return redirect()->route('super-admin.branches.index');
+            return redirect()->route('super-admin.branches.index');
+        } catch (\Throwable $e) {
+            report($e);
+
+            Alert::error('Failed', $e->getMessage());
+
+            return back()->withInput();
+        }
     }
 
     public function show(string $id)
@@ -64,11 +72,19 @@ class BranchController extends Controller
 
     public function update(UpdateBranchRequest $request, branch $branch)
     {
-        $this->branchService->update($branch, $request->validated());
+        try {
+            $this->branchService->update($branch, $request->validated());
 
-        Alert::success('Success', 'Branch updated successfully.');
+            Alert::success('Success', 'Branch updated successfully.');
 
-        return redirect()->route('super-admin.branches.index');
+            return redirect()->route('super-admin.branches.index');
+        } catch (\Throwable $e) {
+            report($e);
+
+            Alert::error('Failed', $e->getMessage());
+
+            return back()->withInput();
+        }
     }
 
     public function destroy(Branch $branch)
@@ -83,5 +99,18 @@ class BranchController extends Controller
         }
 
         return redirect()->route('super-admin.branches.index');
+    }
+
+    public function byTenant(Tenant $tenant)
+    {
+        return response()->json(
+            $tenant->branches()
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get([
+                    'id',
+                    'name',
+                ])
+        );
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\superadmin\BranchController;
 use App\Http\Controllers\Superadmin\TenantController;
+use App\Http\Controllers\superadmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,11 @@ Route::middleware('auth')->group(function () {
         // branches
         Route::resource('branches', BranchController::class)->except('show');
         Route::get('branches/data', [BranchController::class, 'data'])->name('branches.data');
+        Route::get('branches/by-tenant/{tenant}', [BranchController::class, 'byTenant'])->name('branches.by-tenant');
+
+        // user
+        Route::resource('users', UserController::class)->except('show');
+        Route::get('users/data', [UserController::class, 'data'])->name('users.data');
     });
 
     // OWNER

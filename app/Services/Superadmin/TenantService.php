@@ -76,7 +76,8 @@ class TenantService
             )
         );
 
-        $number = Tenant::where('code', 'like', $prefix . '%')->count() + 1;
+        $number = Tenant::withTrashed()
+            ->where('code', 'like', $prefix . '%')->count() + 1;
 
         return sprintf('%s%03d', $prefix, $number);
     }
