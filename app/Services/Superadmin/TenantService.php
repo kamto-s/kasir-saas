@@ -3,12 +3,20 @@
 namespace App\Services\Superadmin;
 
 use App\Models\Tenant;
+use App\Services\CodeGeneratorService;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
 class TenantService
 {
+    private CodeGeneratorService $codeGeneratorService;
+
+    public function __construct()
+    {
+        $this->codeGeneratorService = new CodeGeneratorService();
+    }
+
     public function datatable()
     {
         return DataTables::eloquent(Tenant::query()->latest())
