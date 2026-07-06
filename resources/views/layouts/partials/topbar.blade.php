@@ -18,10 +18,13 @@
                 </a>
             </div>
 
-            <!-- Sidebar Menu Toggle Button -->
             <button class="button-toggle-menu">
                 <i class="mdi mdi-menu"></i>
             </button>
+
+            <div>
+                <h4 class="mb-0 fw-bold text-uppercase">{{ optional(auth()->user()->tenant)->name }}</h4>
+            </div>
         </div>
 
         <ul class="gap-4 topbar-menu d-flex align-items-center">

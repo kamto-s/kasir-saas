@@ -42,11 +42,8 @@
                             <thead>
                                 <tr class="bg-light">
                                     <th width="60"><span class="placeholder col-8"></span></th>
-                                    <th><span class="placeholder col-10"></span></th>
                                     <th><span class="placeholder col-9"></span></th>
                                     <th><span class="placeholder col-9"></span></th>
-                                    <th><span class="placeholder col-9"></span></th>
-                                    <th><span class="placeholder col-11"></span></th>
                                     <th><span class="placeholder col-8"></span></th>
                                     <th width="100"><span class="placeholder col-8"></span></th>
                                     <th width="120"><span class="placeholder col-9"></span></th>
@@ -58,15 +55,9 @@
                                     <tr>
                                         <td><span class="placeholder col-8"></span></td>
                                         <td><span class="placeholder col-8"></span></td>
-                                        <td><span class="placeholder col-8"></span></td>
                                         <td><span class="placeholder col-10"></span></td>
                                         <td><span class="placeholder col-9"></span></td>
-                                        <td><span class="placeholder col-11"></span></td>
-                                        <td><span class="placeholder col-8"></span></td>
-
-                                        <td>
-                                            <span class="placeholder rounded-pill col-8"></span>
-                                        </td>
+                                        <td><span class="placeholder rounded-pill col-8"></span> </td>
 
                                         <td>
                                             <div class="gap-2 d-flex">
@@ -92,15 +83,13 @@
                     </div>
 
                     <div id="tableWrapper" class="table-hidden">
-                        <table id="branchTable" class="table table-hover w-100">
+                        <table id="categoryTable" class="table table-hover w-100">
                             <thead>
                                 <tr class="bg-light">
                                     <th>No</th>
-                                    <th>Tenant</th>
                                     <th>Code</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Description</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -134,7 +123,7 @@
 
     <script>
         $(function() {
-            let table = $('#branchTable').DataTable({
+            let table = $('#categoryTable').DataTable({
                 processing: false,
                 serverSide: true,
                 autoWidth: false,
@@ -150,10 +139,6 @@
                         orderable: false
                     },
                     {
-                        data: 'tenant',
-                        name: 'tenant'
-                    },
-                    {
                         data: 'code',
                         name: 'code'
                     },
@@ -162,12 +147,8 @@
                         name: 'name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone'
+                        data: 'description',
+                        name: 'description'
                     },
                     {
                         data: 'is_active',

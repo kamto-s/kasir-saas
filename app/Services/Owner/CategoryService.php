@@ -1,15 +1,22 @@
 <?php
 
-namespace App\Services\Superadmin;
+namespace App\Services\Owner;
 
 use App\Models\Category;
-use App\Models\Tenant;
+use App\Services\CodeGeneratorService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryService
 {
+    protected CodeGeneratorService $codeGeneratorService;
+
+    public function __construct()
+    {
+        $this->codeGeneratorService = new CodeGeneratorService();
+    }
+
     public function datatable()
     {
         return DataTables::eloquent(Category::query()->where('tenant_id', Auth::user()->tenant_id)->latest())
@@ -32,7 +39,7 @@ class CategoryService
 
             $data['tenant_id'] = Auth::user()->tenant_id;
 
-            $data['code'] = $this->generateCode();
+            $data['code'] = $this->codeGeneratorService->generate(Category::class, 'CAT');
 
             return Category::create($data);
         });
@@ -42,14 +49,6 @@ class CategoryService
     {
         return DB::transaction(function () use ($category, $data) {
 
-            if ($data['is_main']) {
-                Category::where('tenant_id', $category->tenant_id)
-                    ->whereKeyNot($category->id)
-                    ->update([
-                        'is_main' => false,
-                    ]);
-            }
-
             $category->update($data);
 
             return $category;
@@ -58,25 +57,10 @@ class CategoryService
 
     public function delete(Category $category): void
     {
+        // if ($category->branches()->exists()) {
+        //     throw new \Exception('Tenant cannot be deleted because it still has branches.');
+        // }
+
         $category->delete();
-    }
-
-    protected function generateCode(): string
-    {
-        $tenantId = Auth::user()->tenant_id;
-
-        $last = Category::withTrashed()
-            ->where('tenant_id', $tenantId)
-            ->latest()
-            ->first();
-
-        $number = 1;
-
-        if ($last) {
-
-            $number = (int) substr($last->code, 3) + 1;
-        }
-
-        return 'CAT' . str_pad($number, 3, '0', STR_PAD_LEFT);
     }
 }

@@ -3,13 +3,19 @@
 namespace App\Services\Superadmin;
 
 use App\Models\Branch;
-use App\Models\Tenant;
+use App\Services\CodeGeneratorService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class BranchService
 {
+    protected CodeGeneratorService $codeGeneratorService;
+
+    public function __construct()
+    {
+        $this->codeGeneratorService = new CodeGeneratorService();
+    }
+
     public function datatable()
     {
         return DataTables::eloquent(Branch::query()->latest())
@@ -49,7 +55,7 @@ class BranchService
 
             $data['is_main'] = ! Branch::where('tenant_id', $data['tenant_id'])->exists();
 
-            $data['code'] = $this->generateCode($data['tenant_id']);
+            $data['code'] = $this->codeGeneratorService->generate(Branch::class, 'BRC');
 
             return Branch::create($data);
         });
@@ -80,27 +86,5 @@ class BranchService
         }
 
         $branch->delete();
-    }
-
-    protected function generateCode(string $tenantId): string
-    {
-        $tenant = Tenant::findOrFail($tenantId);
-
-        $last = Branch::withTrashed()
-            ->where('tenant_id', $tenantId)
-            ->orderByDesc('code')
-            ->first();
-
-        $number = 1;
-
-        if ($last) {
-            $number = (int) substr($last->code, -3) + 1;
-        }
-
-        return sprintf(
-            '%s-B%03d',
-            $tenant->code,
-            $number
-        );
     }
 }

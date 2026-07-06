@@ -6,63 +6,72 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Owner\category\StoreCategoryRequest;
 use App\Http\Requests\Owner\category\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Services\Owner\CategoryService;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private CategoryService $categoryService;
+
+    public function __construct()
+    {
+        $this->categoryService = new CategoryService();
+    }
+
     public function index()
     {
+        $title = 'Delete Branch';
+        $text = 'Are you sure you want to delete this branch?';
+
+        confirmDelete($title, $text);
+
         return view('owner.categories.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function data()
+    {
+        return $this->categoryService->datatable();
+    }
+
     public function create()
     {
         return view('owner.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCategoryRequest $request)
     {
-        dd($request->validated());
+        $this->categoryService->create($request->validated());
+
+        Alert::success('Success', 'Category created successfully.');
+
+        return redirect()->route('owner.categories.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return view('owner.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $this->categoryService->update($category, $request->validated());
+
+        Alert::success('Success', 'Category updated successfully.');
+
+        return redirect()->route('owner.categories.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Category $category)
     {
-        //
+        $this->categoryService->delete($category);
+
+        Alert::success('Success', 'Category deleted successfully.');
+
+        return redirect()->route('owner.categories.index');
     }
 }

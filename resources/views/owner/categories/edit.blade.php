@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Tenant')
+@section('title', 'Edit Category')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
         <a href="{{ route('super-admin.dashboard') }}">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
-        <a href="{{ route('super-admin.branches.index') }}">Tenant</a>
+        <a href="{{ route('owner.categories.index') }}">Category</a>
     </li>
     <li class="breadcrumb-item active">
         Edit
@@ -15,15 +15,20 @@
 @endsection
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
 
-            <form action="{{ route('super-admin.branches.update', $branch) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+                    <form action="{{ route('owner.categories.update', $category) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
-                @include('super-admin.branches.form')
-            </form>
+                        @include('owner.categories.form')
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

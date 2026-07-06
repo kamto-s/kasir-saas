@@ -6,11 +6,11 @@ use App\Models\Tenant;
 use App\Services\CodeGeneratorService;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class TenantService
 {
-    private CodeGeneratorService $codeGeneratorService;
+    protected CodeGeneratorService $codeGeneratorService;
 
     public function __construct()
     {
@@ -41,28 +41,30 @@ class TenantService
                 $data['logo'] = $data['logo']->store('tenants', 'public');
             }
 
-            return Tenant::create([
-                'code'      => $this->generateCode($data['name']),
-                'name'      => $data['name'],
-                'email'     => $data['email'] ?? null,
-                'phone'     => $data['phone'] ?? null,
-                'logo'      => $data['logo'] ?? null,
-                'is_active' => $data['is_active'],
-            ]);
+            $data['code'] = $this->codeGeneratorService->generate(Tenant::class, 'TNT');
+
+            return Tenant::create($data);
         });
     }
 
     public function update(Tenant $tenant, array $data): Tenant
     {
-        $tenant->update([
-            'name'      => $data['name'],
-            'email'     => $data['email'] ?? null,
-            'phone'     => $data['phone'] ?? null,
-            'logo'      => $data['logo'] ?? null,
-            'is_active' => $data['is_active'],
-        ]);
+        return DB::transaction(function () use ($tenant, $data) {
 
-        return $tenant;
+            if (isset($data['logo'])) {
+                if ($tenant->logo && Storage::disk('public')->exists($tenant->logo)) {
+                    Storage::disk('public')->delete($tenant->logo);
+                }
+
+                $data['logo'] = $data['logo']->store('tenants', 'public');
+            } else {
+                $data['logo'] = $tenant->logo;
+            }
+
+            $tenant->update($data);
+
+            return $tenant;
+        });
     }
 
     public function delete(Tenant $tenant): void
@@ -72,21 +74,5 @@ class TenantService
         }
 
         $tenant->delete();
-    }
-
-    protected function generateCode(string $name): string
-    {
-        $prefix = strtoupper(
-            Str::substr(
-                Str::of($name)->replace(' ', ''),
-                0,
-                3
-            )
-        );
-
-        $number = Tenant::withTrashed()
-            ->where('code', 'like', $prefix . '%')->count() + 1;
-
-        return sprintf('%s%03d', $prefix, $number);
     }
 }
