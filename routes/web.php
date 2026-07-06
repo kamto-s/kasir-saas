@@ -5,10 +5,12 @@ use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardCo
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Owner\CategoryController;
+use App\Http\Controllers\Owner\ProductController;
 use App\Http\Controllers\Owner\UnitController;
 use App\Http\Controllers\superadmin\BranchController;
 use App\Http\Controllers\Superadmin\TenantController;
 use App\Http\Controllers\superadmin\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -48,6 +50,9 @@ Route::middleware('auth')->group(function () {
         // unit
         Route::resource('units', UnitController::class)->except('show');
         Route::get('units/data', [UnitController::class, 'data'])->name('units.data');
+        // product
+        Route::resource('products', ProductController::class);
+        Route::get('products/data', [ProductController::class, 'data'])->name('products.data');
     });
 
     // CASHIER

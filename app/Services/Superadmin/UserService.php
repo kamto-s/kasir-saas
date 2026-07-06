@@ -12,7 +12,7 @@ class UserService
 {
     public function datatable()
     {
-        return DataTables::eloquent(User::query()->latest())
+        return DataTables::eloquent(User::query()->with('tenant', 'branch', 'role')->latest())
             ->addIndexColumn()
             ->addColumn('tenant', fn($row) => $row->tenant?->name ?? '-')
             ->addColumn('branch', fn($row) => $row->branch?->name ?? '-')

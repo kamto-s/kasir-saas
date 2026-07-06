@@ -18,21 +18,19 @@ class BranchService
 
     public function datatable()
     {
-        return DataTables::eloquent(Branch::query()->latest())
+        return DataTables::eloquent(Branch::query()->with('tenant')->latest())
             ->addIndexColumn()
             ->addColumn('tenant', function ($row) {
-                return $row->tenant->name;
+                return $row->tenant ? $row->tenant->name : '-';
             })
             ->editColumn('name', function ($row) {
                 $html = e($row->name);
 
                 if ($row->is_main) {
-                    if ($row->is_main) {
-                        $html .= '
-                                <span class="border badge bg-primary-subtle text-primary ms-2">
-                                    Main
-                                </span>';
-                    }
+                    $html .= '
+                    <span class="border badge bg-primary-subtle text-primary ms-2">
+                        Main
+                    </span>';
                 }
 
                 return $html;
