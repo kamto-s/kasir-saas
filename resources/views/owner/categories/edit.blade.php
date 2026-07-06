@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{ route('super-admin.dashboard') }}">Dashboard</a>
+        <a href="{{ route('owner.dashboard') }}">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
         <a href="{{ route('owner.categories.index') }}">Category</a>

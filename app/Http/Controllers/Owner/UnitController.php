@@ -3,63 +3,76 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Owner\unit\StoreUnitRequest;
+use App\Http\Requests\Owner\unit\UpdateUnitRequest;
+use App\Models\Unit;
+use App\Services\Owner\UnitService;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UnitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    private UnitService $unitService;
+
+    public function __construct()
+    {
+        $this->unitService = new UnitService();
+    }
+
     public function index()
     {
-        //
+        $title = 'Delete Unit';
+        $text = 'Are you sure you want to delete this unit?';
+
+        confirmDelete($title, $text);
+
+        return view('owner.units.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function data()
+    {
+        return $this->unitService->datatable();
+    }
+
     public function create()
     {
-        //
+        return view('owner.units.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreUnitRequest $request)
     {
-        //
+        $this->unitService->create($request->validated());
+
+        Alert::success('Success', 'Unit created successfully.');
+
+        return redirect()->route('owner.units.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Unit $unit)
     {
-        //
+        return view('owner.units.edit', compact('unit'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateUnitRequest $request, Unit $unit)
     {
-        //
+        $this->unitService->update($unit, $request->validated());
+
+        Alert::success('Success', 'Unit updated successfully.');
+
+        return redirect()->route('owner.units.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Unit $unit)
     {
-        //
+        $this->unitService->delete($unit);
+
+        Alert::success('Success', 'Unit deleted successfully.');
+
+        return redirect()->route('owner.units.index');
     }
 }

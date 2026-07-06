@@ -20,8 +20,8 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $title = 'Delete Branch';
-        $text = 'Are you sure you want to delete this branch?';
+        $title = 'Delete Category';
+        $text = 'Are you sure you want to delete this category?';
 
         confirmDelete($title, $text);
 

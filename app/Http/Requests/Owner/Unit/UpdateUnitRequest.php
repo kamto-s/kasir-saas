@@ -12,7 +12,7 @@ class UpdateUnitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,20 @@ class UpdateUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'symbol' => [
+                'required',
+                'string',
+                'max:5',
+            ],
+            'is_active' => [
+                'required',
+                'boolean',
+            ],
         ];
     }
 }

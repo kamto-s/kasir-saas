@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Create Category')
+@section('title', 'Edit Unit')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
         <a href="{{ route('owner.dashboard') }}">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
-        <a href="{{ route('owner.categories.index') }}">Category</a>
+        <a href="{{ route('owner.units.index') }}">Unit</a>
     </li>
     <li class="breadcrumb-item active">
-        Create
+        Edit
     </li>
 @endsection
 
@@ -20,16 +20,16 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="{{ route('owner.categories.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('owner.units.update', $unit) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @include('owner.categories.form')
-                    </form>
+                        @method('PUT')
 
+                        @include('owner.units.form')
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('styles')
