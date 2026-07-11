@@ -10,7 +10,6 @@ use App\Http\Controllers\Owner\UnitController;
 use App\Http\Controllers\superadmin\BranchController;
 use App\Http\Controllers\Superadmin\TenantController;
 use App\Http\Controllers\superadmin\UserController;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,8 +50,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('units', UnitController::class)->except('show');
         Route::get('units/data', [UnitController::class, 'data'])->name('units.data');
         // product
-        Route::resource('products', ProductController::class);
         Route::get('products/data', [ProductController::class, 'data'])->name('products.data');
+        Route::resource('products', ProductController::class);
     });
 
     // CASHIER

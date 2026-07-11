@@ -17,20 +17,30 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            @php
+                $masterUnits = $units->map(
+                    fn($item) => [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                    ],
+                );
 
-            <form action="{{ route('owner.products.store') }}" method="POST" enctype="multipart/form-data">
+                $oldUnits = old('units', []);
+            @endphp
+
+            <form x-data="productForm(@js($masterUnits), @js($oldUnits))" action="{{ route('owner.products.store') }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                @include('owner.products.form')
-            </form>
 
+                @include('owner.products.form')
+
+            </form>
         </div>
     </div>
-
 @endsection
 
 @push('styles')
 @endpush
 
 @push('scripts')
-    @vite(['resources/js/owner/product-form.js'])
 @endpush

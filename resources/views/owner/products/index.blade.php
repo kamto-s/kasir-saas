@@ -89,7 +89,7 @@
                                     <th>No</th>
                                     <th>Code</th>
                                     <th>Name</th>
-                                    <th>Symbol</th>
+                                    <th>Category</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -147,8 +147,8 @@
                         name: 'name'
                     },
                     {
-                        data: 'symbol',
-                        name: 'symbol'
+                        data: 'category',
+                        name: 'category'
                     },
                     {
                         data: 'is_active',
